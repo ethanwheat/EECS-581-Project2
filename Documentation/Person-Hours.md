@@ -18,12 +18,17 @@ Estimate by task:
 
 
 ## Actual
-This table makes no attempt to track where/when work was done. Use `git` to see history/location of work.
+This table makes no attempt to track where/when work was done, it is simply the cumulative result of Person-Hours.
+
+- The project rubric makes a point of saying
+> This needs to be a day-by-day accounting from each team member on how many hours they spent on the project, including team and GTA meetings, coding, testing, documenting, etc
+
+Ok, well git does that, here: [file history](https://github.com/Tyler51235/EECS-581/commits/main/Documentation/Person-Hours.md)
 
 | Person   | Hours |
 | -------- | ----- |
 | Kyler    | 5     |
-| Cody     | 0     |
+| Cody     | 0.5   |
 | Joon     | 0     |
 | Hayden   | 0     |
 | Harrison | 0     |
