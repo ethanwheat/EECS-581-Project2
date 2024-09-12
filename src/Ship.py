@@ -3,7 +3,7 @@ Contains the Ship class
 
 - Keeps track of a ships location and hits
 
-Authors: Cody Duong
+Authors: Cody Duong, Harrison Wendt
 Date: 2024-09-12
 """
 
