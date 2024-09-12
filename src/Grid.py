@@ -4,7 +4,7 @@ Contains the Grid class
 - Manages state of each players grid
 - Keeps track of ships
 
-Authors: Cody Duong
+Authors: Cody Duong, Harrison Wendt
 Date: 2024-09-12
 """
 
