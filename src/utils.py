@@ -2,7 +2,7 @@
 This module contains utility functions useful to all scopes of the Battleship
 program
 
-Authors: Cody Duong
+Authors: Kyler Luong, Cody Duong
 Date: 2024-09-12
 """
 

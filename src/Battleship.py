@@ -4,14 +4,13 @@ Contains the Battleship class
 - Handles player setup and controls
 - Ends game upon certain conditions
 
-Authors: Cody Duong, Harrison Wendt
+Authors: Kyler Luong, Cody Duong, Harrison Wendt
 Date: 2024-09-12
 """
 
-
 from typing import Literal
 from src.Grid import Grid
-from src.util import *
+from src.utils import *
 
 
 class Battleship:
@@ -31,10 +30,10 @@ class Battleship:
         """
         self.player1 = Grid(rows, cols)
         self.player2 = Grid(rows, cols)
-        self.turn = 0 #start with p1 turn, 0 for p1 and 1 for p2)
+        self.turn = 0  # start with p1 turn, 0 for p1 and 1 for p2)
 
     def play(self) -> None:
-        #raise Exception("Not implemented yet")
+        # raise Exception("Not implemented yet")
 
         # TODO
         # Check the self.turn for which player turn
@@ -52,8 +51,8 @@ class Battleship:
         # strike at the grid of the ENEMY player with Grid.strike
 
         # end turn
-      
-      while True:
+
+        while True:
             # Determine the current player and the enemy
             current_player = self.player1 if self.turn == 0 else self.player2
             enemy_player = self.player2 if self.turn == 0 else self.player1
@@ -93,11 +92,10 @@ class Battleship:
                 break
 
             # End turn and switch to the other player
-            self.turn = 1 - self.turn  # Toggle between 0 and 1
+            # Toggle between 0 and 1
+            self.turn = 1 - self.turn  # type: ignore
             input("Press Enter to end your turn and pass to the next player...")
             clear_screen()
-      
-             
 
-      input("Press Enter to quit game.")
-      clear_screen()
+        input("Press Enter to quit game.")
+        clear_screen()

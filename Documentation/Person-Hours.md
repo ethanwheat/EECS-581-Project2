@@ -28,7 +28,7 @@ Ok, well git does that, here: [file history](https://github.com/Tyler51235/EECS-
 | Person   | Hours |
 | -------- | ----- |
 | Kyler    | 5     |
-| Cody     | 3     |
+| Cody     | 4     |
 | Joon     | 0     |
 | Hayden   | 0     |
 | Harrison | 2     |

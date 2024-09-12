@@ -3,12 +3,12 @@ Contains the Ship class
 
 - Keeps track of a ships location and hits
 
-Authors: Cody Duong, Harrison Wendt
+Authors: Kyler Luong, Cody Duong, Harrison Wendt
 Date: 2024-09-12
 """
 
 from typing import Literal, cast
-from src.util import *
+from src.utils import *
 
 
 ShipSize = Literal[1, 2, 3, 4, 5]
@@ -53,27 +53,28 @@ class Ship:
 
         return positions
 
-    def strike(self, pos: tuple[int, int]) -> bool: 
+    def strike(self, pos: tuple[int, int]) -> bool:
         """This method will attempt to strike the ship at row, index. If it is successful it will reduce the health and return true"""
-        #make sure ship is placed
-        if self.root == (-1,-1) or self.orientation is None:
+        # make sure ship is placed
+        if self.root == (-1, -1) or self.orientation is None:
             return False
-        #get ship positions
+        # get ship positions
         ship_positions = self.positions()
 
         if pos in ship_positions:
-            hit_index = ship_positions.index(pos) #finds index of pos within the ship's position
-            if self.hit[hit_index] == 0: #if ship hasn't been hit at that spot, update
+            hit_index = ship_positions.index(
+                pos
+            )  # finds index of pos within the ship's position
+            if self.hit[hit_index] == 0:  # if ship hasn't been hit at that spot, update
                 self.hit[hit_index] = 1
                 return True
         return False
 
     def sunk(self) -> bool:
         """Is this ship sunk?"""
-        
-        #checks if all spaces of a ship have been hit
+
+        # checks if all spaces of a ship have been hit
         return all(hit == 1 for hit in self.hit)
-        
 
     def intersects(self, other: "Ship") -> bool:
         """Check if this ship intersects with another ship."""
@@ -106,6 +107,15 @@ class Ship:
                 return convert_pos_str_to_row_col(pos)
             except ValueError:
                 pass
+
+    def __repr__(self) -> str:
+        return f"root: {self.root}, size: {self.size}, orientation: {self.orientation}, hits: {self.hit}"
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Ship):
+            return NotImplemented
+        # by necessity if positions are same then orientation is same (or doesn't matter)
+        return self.positions() == other.positions() and self.hit == other.hit
 
     def __str__(self) -> str:
         return f"1x{self.size}"

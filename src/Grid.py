@@ -4,14 +4,14 @@ Contains the Grid class
 - Manages state of each players grid
 - Keeps track of ships
 
-Authors: Cody Duong, Harrison Wendt
+Authors: Kyler Luong, Cody Duong, Harrison Wendt
 Date: 2024-09-12
 """
 
 import itertools
 from typing import Literal
 from src.Ship import Ship
-from src.util import *
+from src.utils import *
 
 
 class Grid:
@@ -41,11 +41,11 @@ class Grid:
             self.display_ships()
             print("\nShips to place:")
             for i, value in enumerate(ships_to_place):
-                print(f"{i}: {value}")
+                print(f"{i+1}: {value}")
             try:
                 ship_index = int(input("Select a ship (by index) to place: "))
-                if 0 <= ship_index < len(ships_to_place):
-                    ship = ships_to_place.pop(ship_index)
+                if 1 <= ship_index < len(ships_to_place) + 1:
+                    ship = ships_to_place.pop(ship_index - 1)
                     ship.orientation = Ship.prompt_orientation()
                     ship.root = Ship.prompt_root()
                     invalid_ship = self.place_ship(ship)
@@ -71,30 +71,33 @@ class Grid:
         # update the shot_grid to reflect whether we missed at pos, hit at pos, and then if a ship sunk update all parts of the grid where sunk
 
         """Handles the strike on the grid at given position"""
-        row,col = pos
+        row, col = pos
         hit_any_ship = False
 
-        #Go through each ship and check if position hits any of them
-        for ship in self.ships: #go through all ships
-            if ship.strike(pos): #if ship is hit
-                hit_any_ship = True #set flag to true
-                print(f"Hit at {pos}!") 
+        # Go through each ship and check if position hits any of them
+        for ship in self.ships:  # go through all ships
+            if ship.strike(pos):  # if ship is hit
+                hit_any_ship = True  # set flag to true
+                print(f"Hit at {pos}!")
 
-                if ship.sunk(): 
+                if ship.sunk():
                     print(f"You sunk a {ship}!")
-                    #update grid with sunk ships
+                    # update grid with sunk ships
                     for ship_pos in ship.positions():
-                        sr,sc = ship_pos #seperates position coordinates into two variables (ship row, and ship column)
-                        self.shot_grid[sr][sc] = 3 #mark sunk parts on shot grid
+                        sr, sc = (
+                            ship_pos  # seperates position coordinates into two variables (ship row, and ship column)
+                        )
+                        self.shot_grid[sr][sc] = 3  # mark sunk parts on shot grid
                 else:
-                    self.shot_grid[row][col]=2 #if ship not sunk but hit update shot grid to 2
+                    self.shot_grid[row][
+                        col
+                    ] = 2  # if ship not sunk but hit update shot grid to 2
                 break
         if not hit_any_ship:
             print(f"Miss at {pos}.")
             self.shot_grid[row][col] = 1
-        
-        self.display_shots()
 
+        self.display_shots()
 
     @staticmethod
     def __prompt_number_of_ships() -> int:
