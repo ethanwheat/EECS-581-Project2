@@ -69,7 +69,32 @@ class Grid:
         # check self.ships, and try ship.strike() on every ship, if true then we hit a ship (end early end loop), if false for all then no ships were hit
         # if ship.strike() is successful, check if we sunk the ship with ship.sunk(), print appropriate messages for hitting, missing, or sinking
         # update the shot_grid to reflect whether we missed at pos, hit at pos, and then if a ship sunk update all parts of the grid where sunk
-        pass
+
+        """Handles the strike on the grid at given position"""
+        row,col = pos
+        hit_any_ship = False
+
+        #Go through each ship and check if position hits any of them
+        for ship in self.ships:
+            if ship.strike(pos):
+                hit_any_ship = True
+                print(f"Hit at {pos}!")
+
+                if ship.sunk():
+                    print(f"You sunk a {ship}!")
+                    #update grid with sunk ships
+                    for ship_pos in ship.positions():
+                        sr,sc = ship_pos
+                        self.shot_grid[sr][sc] = 3 #mark sunk parts on shot grid
+                else:
+                    self.shot_grid[row][col]=2
+                break
+        if not hit_any_ship:
+            print(f"Miss at {pos}.")
+            self.shot_grid[row][col] = 1
+        
+        self.display_shots()
+
 
     @staticmethod
     def __prompt_number_of_ships() -> int:

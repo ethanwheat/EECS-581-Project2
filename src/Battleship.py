@@ -31,9 +31,10 @@ class Battleship:
         """
         self.player1 = Grid(rows, cols)
         self.player2 = Grid(rows, cols)
+        self.turn = 0 #start with p1 turn, 0 for p1 and 1 for p2)
 
     def play(self) -> None:
-        raise Exception("Not implemented yet")
+        #raise Exception("Not implemented yet")
 
         # TODO
         # Check the self.turn for which player turn
@@ -51,4 +52,52 @@ class Battleship:
         # strike at the grid of the ENEMY player with Grid.strike
 
         # end turn
-        clear_screen()
+      
+      while True:
+            # Determine the current player and the enemy
+            current_player = self.player1 if self.turn == 0 else self.player2
+            enemy_player = self.player2 if self.turn == 0 else self.player1
+
+            # Display both current and enemy grids
+            print(f"\nPlayer {self.turn + 1}'s Turn\n")
+            print("Your Grid:")
+            current_player.display_ships()  # Show our ships and enemy shots
+            print("\nEnemy Grid:")
+            enemy_player.display_shots()  # Show our shots on the enemy
+
+            # Get a valid strike position from the player
+            while True:
+                try:
+                    pos = input("Enter the position to strike (e.g., A1): ").upper()
+                    strike_pos = convert_pos_str_to_row_col(pos)
+
+                    # Check if the position is on the board and hasn't been struck already
+                    row, col = strike_pos
+                    if (
+                        0 <= row < current_player.rows
+                        and 0 <= col < current_player.cols
+                        and enemy_player.shot_grid[row][col] == 0
+                    ):
+                        break
+                    else:
+                        print("Invalid position or position already struck. Try again.")
+                except ValueError:
+                    print("Invalid input. Use format like 'A1'. Try again.")
+
+            # Strike the enemy player's grid
+            enemy_player.strike(strike_pos)
+
+            # Check if the game should end (all ships sunk)
+            if all(ship.sunk() for ship in enemy_player.ships):
+                print(f"Player {self.turn + 1} wins!")
+                break
+
+            # End turn and switch to the other player
+            self.turn = 1 - self.turn  # Toggle between 0 and 1
+            input("Press Enter to end your turn and pass to the next player...")
+            clear_screen()
+      
+             
+
+      input("Press Enter to quit game.")
+      clear_screen()

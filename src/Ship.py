@@ -53,17 +53,27 @@ class Ship:
 
         return positions
 
-    def strike(self, pos: tuple[int, int]) -> bool:
+    def strike(self, pos: tuple[int, int]) -> bool: 
         """This method will attempt to strike the ship at row, index. If it is successful it will reduce the health and return true"""
-
         # TODO
-        pass
+        if self.root == (-1,-1) or self.orientation is None:
+            return False
+        
+        ship_positions = self.positions()
+
+        if pos in ship_positions:
+            hit_index = ship_positions.index(pos)
+            if self.hit[hit_index] == 0:
+                self.hit[hit_index] = 1
+                return True
+        return False
 
     def sunk(self) -> bool:
         """Is this ship sunk?"""
         
         # TODO
-        pass
+        return all(hit == 1 for hit in self.hit)
+        
 
     def intersects(self, other: "Ship") -> bool:
         """Check if this ship intersects with another ship."""
