@@ -55,15 +55,15 @@ class Ship:
 
     def strike(self, pos: tuple[int, int]) -> bool: 
         """This method will attempt to strike the ship at row, index. If it is successful it will reduce the health and return true"""
-        # TODO
+        #make sure ship is placed
         if self.root == (-1,-1) or self.orientation is None:
             return False
-        
+        #get ship positions
         ship_positions = self.positions()
 
         if pos in ship_positions:
-            hit_index = ship_positions.index(pos)
-            if self.hit[hit_index] == 0:
+            hit_index = ship_positions.index(pos) #finds index of pos within the ship's position
+            if self.hit[hit_index] == 0: #if ship hasn't been hit at that spot, update
                 self.hit[hit_index] = 1
                 return True
         return False
@@ -71,7 +71,7 @@ class Ship:
     def sunk(self) -> bool:
         """Is this ship sunk?"""
         
-        # TODO
+        #checks if all spaces of a ship have been hit
         return all(hit == 1 for hit in self.hit)
         
 
