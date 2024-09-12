@@ -4,7 +4,7 @@ Contains the Battleship class
 - Handles player setup and controls
 - Ends game upon certain conditions
 
-Authors: Cody Duong
+Authors: Cody Duong, Harrison Wendt
 Date: 2024-09-12
 """
 
