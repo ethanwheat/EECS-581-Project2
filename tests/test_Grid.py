@@ -32,8 +32,9 @@ class Test_Grid(unittest.TestCase):
         self._patches.append(mock.patch("src.Ship.print", side_effect=lambda *args, **kwargs: None))  # type: ignore
 
         # special named mocks
-        self.grid_input = cast(mock.MagicMock, self._patches[0].start())  # type: ignore
-        self.ship_input = cast(mock.MagicMock, self._patches[1].start())  # type: ignore
+        self.grid_input = self._patches[0].start()
+        self.ship_input = self._patches[1].start()
+
         # remaining unnamed mocks (typically suppressed output)
         self._mocks = [
             cast(mock.MagicMock, [patch.start() for patch in self._patches[2:]])  # type: ignore
@@ -111,5 +112,84 @@ class Test_Grid(unittest.TestCase):
         self.assertEqual(grid.ships, mock_ships)
 
     def test_5_ship(self) -> None:
-        # TODO
-        pass
+        # perform
+
+        # place `5` ships
+        # select `5`th ship to place
+        grid_inputs = ["5", "5"]
+
+        # choose 'foo' orientation (invalid)
+        # choose 'H' orientation
+        # place at 'A1'
+        ship_inputs = ["foo", "H", "A1"]
+
+        # select `5`th ship to place (invalid)
+        # select `4`th ship to place
+        grid_inputs.extend(["5", "4"])
+
+        # select "V" orientation
+        # select "A1" (invalid)
+        ship_inputs.extend(["V", "A1"])
+
+        # select `4`th ship to place
+        grid_inputs.extend(["4"])
+
+        # select "H" orientation
+        # select "B2"
+        ship_inputs.extend(["H", "B2"])
+
+        # select `3`rd ship to place
+        grid_inputs.extend(["3"])
+
+        # select "V" orientation
+        # select "C3"
+        ship_inputs.extend(["V", "C3"])
+
+        # select `2`nd ship to place
+        grid_inputs.extend(["2"])
+
+        # select "H" orientation
+        # select "D4"
+        ship_inputs.extend(["H", "D4"])
+
+        # select `1`st ship to place
+        grid_inputs.extend(["1"])
+
+        # select "V" orientation
+        # select "E5"
+        ship_inputs.extend(["V", "E5"])
+
+        # enter to exit Grid __init__
+        grid_inputs.extend([""])
+
+        self.ship_input.side_effect = iter(ship_inputs)
+        self.grid_input.side_effect = iter(grid_inputs)
+
+        # Create expected ships with their sizes, orientations, and root positions
+        mock_ship_1 = Ship(1)
+        mock_ship_1.root = (4, 4)
+        mock_ship_1.orientation = "V"
+
+        mock_ship_2 = Ship(2)
+        mock_ship_2.root = (3, 3)
+        mock_ship_2.orientation = "H"
+
+        mock_ship_3 = Ship(3)
+        mock_ship_3.root = (2, 2)
+        mock_ship_3.orientation = "V"
+
+        mock_ship_4 = Ship(4)
+        mock_ship_4.root = (1, 1)
+        mock_ship_4.orientation = "H"
+
+        mock_ship_5 = Ship(5)
+        mock_ship_5.root = (0, 0)
+        mock_ship_5.orientation = "H"
+
+        # Expected ships list
+        mock_ships = [mock_ship_5, mock_ship_4, mock_ship_3, mock_ship_2, mock_ship_1]
+
+        # Create the Grid and check if the ships match the expected result
+        grid = Grid(10, 10)
+
+        self.assertEqual(grid.ships, mock_ships)
