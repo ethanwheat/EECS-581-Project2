@@ -1,0 +1,54 @@
+The project is the classic Battleship board game. This implementation features three main classes: Ship, Grid, and Battleship.
+
+Ship Class
+Represents a ship, keeping track of its size, position, orientation, and whether it has been hit. Handles ship-related operations like determining its positions on the board, handling strikes, and determining if the ship is sunk.
+
+size: ShipSize - Represents the ship's size, values between 1-5
+orientation: Literal[None, "H", "V"] - The orientation of the ship, either horizontal ("H") or vertical ("V").
+root: tuple[int, int] - The root position of the ship, represented as a tuple of grid coordinates (row, col). An unplaced ship has root (-1, -1).
+hit: list[Literal[0, 1]] - A list representing the state of each segment of the ship. 0 indicates that a part hasn't been hit, and 1 indicates it has been hit.
+Key Methods:
+__init__(size: ShipSize) - Initializes the ship with its size and default values for its other attributes.
+
+positions() -> list[tuple[int, int]] - Returns a list of grid positions that the ship occupies, based on its root and orientation.
+
+strike(pos: tuple[int, int]) -> bool - Attempts to hit the ship at the given board position. If the ship has that position and hasn't been hit there before, the hit is recorded, and the method returns True. Otherwise, it returns False.
+
+sunk() -> bool - Checks if all parts of the ship have been hit, indicating that the ship has been sunk.
+
+intersects(other: "Ship") -> bool - Checks if the ship intersects with another ship by comparing the positions they occupy.
+
+prompt_orientation() & prompt_root() - Helper methods to prompt the user for ship placement details (orientation and starting position).
+
+Grid Class
+Manages the game board for a player, including the ships and the state of shots made on the board. It handles ship placement, shot tracking, and determining the result of strikes.
+
+ships: list[Ship] - A list of all ships placed on the grid.
+shot_grid: list[list[Literal[0, 1, 2, 3]]] - A 2D grid that tracks the state of each position.
+0 = no shot made,
+1 = shot made (miss),
+2 = shot made (hit),
+3 = sunk ship.
+rows: int & cols: int - The number of rows and columns in the grid.
+Key Methods:
+__init__(rows: int, cols: int) - Initializes the grid with a specific number of rows and columns. It prompts the player to place their ships.
+
+strike(pos: tuple[int, int]) -> None - Handles a strike at the given position on the grid. It checks if any ship is hit, updates the grid state accordingly (hit, miss, or sunk), and prints messages.
+
+place_ship(ship: Ship) -> None | Ship - Attempts to place a ship on the grid. If the placement is valid, the ship is added to the grid. Otherwise, the method returns the ship to indicate failure.
+
+validate_ship(ship: Ship) -> bool - Validates the position and orientation of a ship, checking if it fits within the grid and doesn't overlap with other ships.
+
+display_ships() & display_shots() - Methods to visually display the player's grid, showing either the ships' positions or the results of attempted shots.
+
+__prompt_number_of_ships() - Prompts the user for the number of ships they want to place (between 1 and 5).
+
+3. Battleship Class
+Manages the overall game flow, including player turns, board setup, and determining the winner. 
+
+Key Attributes:
+player1: Grid & player2: Grid - Boards for the two players.
+turn: Literal[0, 1] - Keeps track of which player's turn it is (0 for Player 1, 1 for Player 2).
+Key Methods:
+__init__(rows: int = 10, cols: int = 10) - Initializes the game with two grids, one for each player. The default grid size is 10x10.
+
