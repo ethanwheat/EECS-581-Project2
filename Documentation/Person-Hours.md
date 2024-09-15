@@ -30,5 +30,5 @@ Ok, well git does that, here: [file history](https://github.com/Tyler51235/EECS-
 | Kyler    | 5.5   |
 | Cody     | 4.5   |
 | Joon     | 2.0   |
-| Hayden   | 0.5   |
+| Hayden   | 1.5   |
 | Harrison | 2.5   |
