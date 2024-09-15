@@ -1,4 +1,4 @@
-The project is the classic Battleship board game. This implementation features three main classes: Ship, Grid, and Battleship.
+The project is the classic Battleship board game. This implementation has three main classes: Ship, Grid, and Battleship.
 
 Ship Class
 Represents a ship, keeping track of its size, position, orientation, and whether it has been hit. Handles ship-related operations like determining its positions on the board, handling strikes, and determining if the ship is sunk.
