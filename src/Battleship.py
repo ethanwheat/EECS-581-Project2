@@ -18,6 +18,7 @@ class Battleship:
     player1: Grid
     turn: Literal[0, 1]
     isAI: bool
+    difficulty: int
 
     def __init__(self, rows: int = 10, cols: int = 10) -> None:
         """
