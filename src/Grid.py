@@ -51,22 +51,17 @@ class Grid:
         for ship in ships_to_place:
             # Find a valid coordinate and place ship
             while (True):
-                # Get all the possible letters, numbers, and orientations given the board size
-                letters = [chr(i) for i in range(65, 65+self.cols)]
-                numbers = [str(i) for i in range(1, self.rows+1)]
+                # List of orientations
                 orientations = ["H", "V"]
                 
-                # Randomly choose a letter, number, and orientation
-                letter = random.choice(letters)
-                number = random.choice(numbers)
+                # Randomly choose a row, col, and orientation
+                row = random.randint(1, self.rows)
+                col = random.randint(1, self.cols)
                 orientation = random.choice(orientations)
-
-                # Get combination of letter and number as coordinate
-                coordinate = letter + number
 
                 # Set orientation and root
                 ship.orientation = orientation
-                ship.root = convert_pos_str_to_row_col(coordinate)
+                ship.root = (row, col)
 
                 # Check if valid placement, if not retry
                 if (not self.place_ship(ship)):
