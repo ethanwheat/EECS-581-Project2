@@ -33,12 +33,11 @@ class Battleship:
           cols (int, optional): The number of columns in this Battleship game. Defaults to `10`
         """
 
-        option, difficulty, numShips = self.gameSetup()
+        option, self.difficulty, numShips = self.gameSetup()
         playingAI = option == "2"
 
         self.player1 = Grid(rows, cols, numShips, False, playingAI)
         self.player2 = Grid(rows, cols, numShips, playingAI, playingAI)
-        self.difficulty = difficulty
         self.turn = 0  # start with p1 turn, 0 for p1 and 1 for p2)
 
         if (playingAI):
