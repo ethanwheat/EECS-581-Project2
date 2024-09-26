@@ -33,8 +33,8 @@ class Battleship:
           cols (int, optional): The number of columns in this Battleship game. Defaults to `10`
         """
 
-        # Prompt game setup
-        option, self.difficulty, numShips = self.gameSetup()
+        # Prompt setup game
+        option, self.difficulty, numShips = self.setupGame()
         playingAI = option == "2"
 
         # Create grids for each player and set arguements if player is AI and is playing AI
@@ -48,13 +48,13 @@ class Battleship:
             self.AIOpponent = AIOpponent(self.player1)
 
     # Ask whether player wants to play against another player or ai
-    def gameSetup(self):
+    def setupGame(self):
         option = None
         difficulty = None
         numShips = 0
         state = 0
 
-        # Loop through game setup prompts
+        # Loop through setup game prompts
         while (True):
             if (state == 0):
                 # Prompt for option
@@ -100,7 +100,7 @@ class Battleship:
                 except ValueError:
                     print("Invalid value for ships\n")
 
-        # Return game setup options
+        # Return setup game options
         return option, difficulty, numShips
 
     def play(self) -> None:
