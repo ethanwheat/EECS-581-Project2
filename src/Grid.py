@@ -4,8 +4,9 @@ Contains the Grid class
 - Manages state of each players grid
 - Keeps track of ships
 
-Authors: Kyler Luong, Cody Duong, Harrison Wendt
+Authors: Kyler Luong, Cody Duong, Harrison Wendt, Gavin Kirwan
 Date: 2024-09-12
+Edited: 2024-09-25
 """
 
 import itertools

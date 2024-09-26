@@ -3,8 +3,9 @@ Contains the Ship class
 
 - Keeps track of a ships location and hits
 
-Authors: Kyler Luong, Cody Duong, Harrison Wendt
+Authors: Kyler Luong, Cody Duong, Harrison Wendt, Gavin Kirwan
 Date: 2024-09-12
+Edited: 2024-09-25
 """
 
 from typing import Literal, cast
