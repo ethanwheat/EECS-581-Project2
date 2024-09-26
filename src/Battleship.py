@@ -33,67 +33,70 @@ class Battleship:
           cols (int, optional): The number of columns in this Battleship game. Defaults to `10`
         """
 
-        self.isAI, self.difficulty = self.gameSetup()
-        numShips = self.__prompt_number_of_ships()
-        self.player1 = Grid(rows, cols, numShips, False, self.isAI)
-        self.player2 = Grid(rows, cols, numShips, self.isAI, self.isAI)
+        option, difficulty, numShips = self.gameSetup()
+        playingAI = option == "2"
+
+        self.player1 = Grid(rows, cols, numShips, False, playingAI)
+        self.player2 = Grid(rows, cols, numShips, playingAI, playingAI)
+        self.difficulty = difficulty
         self.turn = 0  # start with p1 turn, 0 for p1 and 1 for p2)
 
-        if (self.isAI):
+        if (playingAI):
             self.AIOpponent = AIOpponent(self.player1)
 
     # Ask whether player wants to play against another player or ai
     def gameSetup(self):
-        # Prompt for option
-        print("Choose an option:")
-        print("1.) Two Players")
-        print("2.) Against AI")
+        option = None
+        difficulty = None
+        numShips = 0
+        state = 0
 
-        option = input()
+        while (True):
+            if (state == 0):
+                # Prompt for option
+                print("Choose an option:")
+                print("1.) Two Players")
+                print("2.) Against AI")
 
-        # Check if valid option
-        if (option not in ["1","2"]):
-            print("Invalid Option\n")
-            return self.gameSetup()
+                pickedOption = input()
 
-        # Two players was picked
-        if (option == "1"):
-            return False, None
-
-        # AI was picked
-        return True, self.aiDifficultySetup()
-
-    def aiDifficultySetup(self):
-        # Prompt for difficulty
-        print("Choose difficulty:")
-        print("1.) Easy")
-        print("2.) Medium")
-        print("3.) Hard")
-
-        difficulty = input()
-
-        # Check if valid option
-        if (difficulty not in ["1","2","3"]):
-            print("Invalid Option\n")
-            return self.aiDifficultySetup()
-
-        # Return difficulty
-        return difficulty
-
-    @staticmethod
-    def __prompt_number_of_ships() -> int:
-        """Prompts the user for a number of ships they want to place"""
-        while True:
-            try:
-                num_ships = int(input("How many ships? (1-5): "))  # ask users
-                if 1 <= num_ships <= 5:  # bounds it needs to fit from user
-                    return num_ships
+                # Check if valid option
+                if (pickedOption == "1"):
+                    option = pickedOption
+                    state+=2
+                elif (pickedOption == "2"):
+                    option = pickedOption
+                    state+=1
                 else:
-                    print(
-                        "Invalid number of ships, expected between 1-5 ships"
-                    )  # doesnt fit in bounds
-            except ValueError:
-                print("Invalid value for ships")
+                    print("Invalid Option\n")
+            elif (state == 1):
+                # Prompt for difficulty
+                print("Choose difficulty:")
+                print("1.) Easy")
+                print("2.) Medium")
+                print("3.) Hard")
+
+                pickedDifficulty = input()
+
+                # Check if valid option
+                if (pickedDifficulty in ["1","2","3"]):
+                    difficulty = pickedDifficulty
+                    state+=1
+                else:
+                    print("Invalid Option\n")
+            else:
+                try:
+                    pickedNumShips = int(input("How many ships? (1-5): "))
+
+                    if 1 <= pickedNumShips <= 5:  # bounds it needs to fit from user
+                        numShips = pickedNumShips
+                        break
+                    else:
+                        print("Invalid number of ships, expected between 1-5 ships\n")
+                except ValueError:
+                    print("Invalid value for ships\n")
+
+        return option, difficulty, numShips
 
     def play(self) -> None:
         # raise Exception("Not implemented yet")
@@ -121,7 +124,7 @@ class Battleship:
             enemy_player = self.player2 if self.turn == 0 else self.player1
 
             # Check if is player or AI
-            if(not self.isAI or self.turn == 0):
+            if(not self.AIOpponent or self.turn == 0):
                 # Display both current and enemy grids
                 print(f"\nPlayer {self.turn + 1}'s Turn\n")
                 print("Your Grid:")
@@ -171,7 +174,7 @@ class Battleship:
                 break
 
             # End turn and switch to the other player
-            if (not self.isAI):
+            if (not self.AIOpponent):
                 input("Press Enter to end your turn and pass to the next player...")
                 clear_screen()
             elif (self.turn == 0):
