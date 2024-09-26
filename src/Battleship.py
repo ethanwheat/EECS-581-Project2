@@ -59,8 +59,8 @@ class Battleship:
             if (state == 0):
                 # Prompt for option
                 print("Choose an option:")
-                print("1.) Two Players")
-                print("2.) Against AI")
+                print("1: Two Players")
+                print("2: Against AI")
 
                 pickedOption = input()
 
@@ -76,9 +76,9 @@ class Battleship:
             elif (state == 1):
                 # Prompt for difficulty
                 print("Choose difficulty:")
-                print("1.) Easy")
-                print("2.) Medium")
-                print("3.) Hard")
+                print("1: Easy")
+                print("2: Medium")
+                print("3: Hard")
 
                 pickedDifficulty = input()
 
