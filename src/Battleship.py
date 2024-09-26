@@ -38,6 +38,7 @@ class Battleship:
 
         self.player1 = Grid(rows, cols, numShips, False, playingAI)
         self.player2 = Grid(rows, cols, numShips, playingAI, playingAI)
+        self.AIOpponent = None
         self.turn = 0  # start with p1 turn, 0 for p1 and 1 for p2)
 
         if (playingAI):
