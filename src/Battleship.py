@@ -12,6 +12,7 @@ Edited: 2024-09-25
 from typing import Literal
 from src.Grid import Grid
 from src.utils import *
+from src.AIOpponent import AIOpponent
 
 
 class Battleship:
@@ -31,11 +32,15 @@ class Battleship:
           rows (str, optional): The number of rows in this Battleship game. Defaults to `10`
           cols (int, optional): The number of columns in this Battleship game. Defaults to `10`
         """
+
         self.isAI, self.difficulty = self.gameSetup()
         numShips = self.__prompt_number_of_ships()
         self.player1 = Grid(rows, cols, numShips, False, self.isAI)
         self.player2 = Grid(rows, cols, numShips, self.isAI, self.isAI)
         self.turn = 0  # start with p1 turn, 0 for p1 and 1 for p2)
+
+        if (self.isAI):
+            self.AIOpponent = AIOpponent(self.player1)
 
     # Ask whether player wants to play against another player or ai
     def gameSetup(self):
@@ -148,20 +153,17 @@ class Battleship:
             else:                
                 # Shoot shots according to difficulty
                 if (self.difficulty == "1"):
-                    print("Easy shot")
-                    # Call easy mode function on AI and pass
-                    # that as argument in strike
-                    # enemy_player.strike(strike_pos)
+                    # Get coordinate from AI easy shot and shoot that shot
+                    coordinate = self.AIOpponent.easy_shot()
+                    enemy_player.strike(coordinate)
                 elif (self.difficulty == "2"):
-                    print("Medium shot")
-                    # Call medium mode function on AI and pass
-                    # that as argument in strike
-                    # enemy_player.strike(strike_pos)
+                    # Get coordinate from AI medium shot and shoot that shot
+                    coordinate = self.AIOpponent.medium_shot()
+                    enemy_player.strike(coordinate)
                 elif (self.difficulty == "3"):
-                    print("Hard shot")
-                    # Call hard mode function on AI and pass
-                    # that as argument in strike
-                    # enemy_player.strike(strike_pos)
+                    # Get coordinate from AI hard shot and shoot that shot
+                    coordinate = self.AIOpponent.hard_shot()
+                    enemy_player.strike(strike_pos)
 
             # Check if the game should end (all ships sunk)
             if all(ship.sunk() for ship in enemy_player.ships):
