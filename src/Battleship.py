@@ -115,7 +115,7 @@ class Battleship:
             current_player = self.player1 if self.turn == 0 else self.player2
             enemy_player = self.player2 if self.turn == 0 else self.player1
 
-            # If is player
+            # Check if is player or AI
             if(not self.isAI or self.turn == 0):
                 # Display both current and enemy grids
                 print(f"\nPlayer {self.turn + 1}'s Turn\n")
