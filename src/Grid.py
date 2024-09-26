@@ -59,8 +59,8 @@ class Grid:
                 letter = random.choice(letters)
                 number = random.choice(numbers)
                 orientation = random.choice(orientations)
-                
-                # Combine to form the coordinate
+
+                # Get combination of letter and number as coordinate
                 coordinate = letter + number
 
                 # Set orientation and root
