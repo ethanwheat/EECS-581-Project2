@@ -70,7 +70,7 @@ class Battleship:
         # Check if valid option
         if (difficulty not in ["1","2","3"]):
             print("Invalid Option\n")
-            return self.aiDifficulty()
+            return self.aiDifficultySetup()
 
         # Return difficulty
         return difficulty
