@@ -44,29 +44,6 @@ class Grid:
             # If AI then generate ship placements
             self.aiPlaceShips()
 
-    def aiPlaceShips(self):
-        # variant ship sizes
-        ships_to_place = [Ship(i) for i in range(1, self.num_ships + 1)]  # type: ignore
-
-        for ship in ships_to_place:
-            # Find a valid coordinate and place ship
-            while (True):
-                # List of orientations
-                orientations = ["H", "V"]
-                
-                # Randomly choose a row, col, and orientation
-                row = random.randint(1, self.rows)
-                col = random.randint(1, self.cols)
-                orientation = random.choice(orientations)
-
-                # Set orientation and root
-                ship.orientation = orientation
-                ship.root = (row, col)
-
-                # Check if valid placement, if not retry
-                if (not self.place_ship(ship)):
-                    break
-
     # Prompts user to place ships
     def userPlaceShips(self):
         # variant ship sizes
@@ -103,6 +80,29 @@ class Grid:
             input("Enter to continue")
 
         clear_screen()
+
+    def aiPlaceShips(self):
+        # variant ship sizes
+        ships_to_place = [Ship(i) for i in range(1, self.num_ships + 1)]  # type: ignore
+
+        for ship in ships_to_place:
+            # Find a valid coordinate and place ship
+            while (True):
+                # List of orientations
+                orientations = ["H", "V"]
+                
+                # Randomly choose a row, col, and orientation
+                row = random.randint(1, self.rows)
+                col = random.randint(1, self.cols)
+                orientation = random.choice(orientations)
+
+                # Set orientation and root
+                ship.orientation = orientation
+                ship.root = (row, col)
+
+                # Check if valid placement, if not retry
+                if (not self.place_ship(ship)):
+                    break
 
     def strike(self, pos: tuple[int, int]) -> None:
         #
