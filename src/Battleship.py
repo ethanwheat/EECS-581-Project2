@@ -31,33 +31,34 @@ class Battleship:
           rows (str, optional): The number of rows in this Battleship game. Defaults to `10`
           cols (int, optional): The number of columns in this Battleship game. Defaults to `10`
         """
-        self.isAI, self.difficulty = self.gameOption()
+        self.isAI, self.difficulty = self.gameSetup()
         numShips = self.__prompt_number_of_ships()
         self.player1 = Grid(rows, cols, numShips, False, self.isAI)
         self.player2 = Grid(rows, cols, numShips, self.isAI, self.isAI)
         self.turn = 0  # start with p1 turn, 0 for p1 and 1 for p2)
 
     # Ask whether player wants to play against another player or ai
-    def gameOption(self):
+    def gameSetup(self):
+        # Prompt for option
         print("Choose an option:")
         print("1.) Two Players")
         print("2.) Against AI")
 
-        mode = input()
+        option = input()
 
         # Check if valid option
-        if (mode not in ["1","2"]):
+        if (option not in ["1","2"]):
             print("Invalid Option\n")
-            return self.gameOption()
+            return self.gameSetup()
 
         # Two players was picked
-        if (mode == "1"):
+        if (option == "1"):
             return False, None
 
         # AI was picked
-        return True, self.aiDifficulty()
+        return True, self.aiDifficultySetup()
 
-    def aiDifficulty(self):
+    def aiDifficultySetup(self):
         # Prompt for difficulty
         print("Choose difficulty:")
         print("1.) Easy")

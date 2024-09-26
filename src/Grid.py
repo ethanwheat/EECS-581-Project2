@@ -51,7 +51,7 @@ class Grid:
         for ship in ships_to_place:
             # Find a valid coordinate and place ship
             while (True):
-                letters = [chr(i) for i in range(65, 65+self.cols)]  # Generates ['A', 'B', ..., 'Z']
+                letters = [chr(i) for i in range(65, 65+self.cols)]
                 numbers = [str(i) for i in range(1, self.rows+1)]
                 orientations = ["H", "V"]
                 
