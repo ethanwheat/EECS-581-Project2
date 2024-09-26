@@ -30,8 +30,9 @@ class Grid:
     def __init__(self, rows: int, cols: int, numShips: int, isAI: bool, playingAI: bool) -> None:
         self.rows = rows
         self.cols = cols
-        self.shot_grid = [[0 for _ in range(rows)] for _ in range(cols)]
+        self.ships = []
         self.num_ships = numShips
+        self.shot_grid = [[0 for _ in range(rows)] for _ in range(cols)]
         self.isAI = isAI
         self.playingAI = playingAI
 
@@ -46,7 +47,6 @@ class Grid:
     def aiPlaceShips(self):
         # variant ship sizes
         ships_to_place = [Ship(i) for i in range(1, self.num_ships + 1)]  # type: ignore
-        self.ships = []  # type: ignore
 
         for ship in ships_to_place:
             # Find a valid coordinate and place ship
@@ -76,7 +76,6 @@ class Grid:
     def userPlaceShips(self):
         # variant ship sizes
         ships_to_place = [Ship(i) for i in range(1, self.num_ships + 1)]  # type: ignore
-        self.ships = []  # type: ignore
 
         # prompt ship placement
         while len(ships_to_place) > 0:
