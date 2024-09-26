@@ -37,6 +37,7 @@ class Battleship:
         option, self.difficulty, numShips = self.gameSetup()
         playingAI = option == "2"
 
+        # Create grids for each player and set arguements if player is AI and is playing AI
         self.player1 = Grid(rows, cols, numShips, False, playingAI)
         self.player2 = Grid(rows, cols, numShips, playingAI, playingAI)
         self.AIOpponent = None
@@ -99,6 +100,7 @@ class Battleship:
                 except ValueError:
                     print("Invalid value for ships\n")
 
+        # Return game setup options
         return option, difficulty, numShips
 
     def play(self) -> None:
