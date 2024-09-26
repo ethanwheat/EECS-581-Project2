@@ -15,6 +15,7 @@ class AIOpponent:
 
         self.rows = grid.rows  # number of rows
         self.cols = grid.cols  # number of columns
+        self.shot_grid = [[0 for _ in range(rows)] for _ in range(cols)]  # used for tracking shots
 
         # list of ship positions in (row, col) format
         self.positions = [pos for ship in grid.ships for pos in ship.positions()]
