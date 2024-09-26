@@ -172,7 +172,7 @@ class Battleship:
                 print(f"Player {self.turn + 1} wins!")
                 break
 
-            # End turn and switch to the other player
+            # End turn and prompt with correct message depending on if playing with or without AI
             if (not self.AIOpponent):
                 input("Press Enter to end your turn and pass to the next player...")
                 clear_screen()
