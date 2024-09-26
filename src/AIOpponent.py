@@ -15,10 +15,10 @@ class AIOpponent:
 
         self.rows = grid.rows  # number of rows
         self.cols = grid.cols  # number of columns
-        # self.shot_grid = [[0 for _ in range(rows)] for _ in range(cols)]  # used for tracking shots
+        self.shot_grid = [[0 for _ in range(rows)] for _ in range(cols)]  # used for tracking shots
 
-        # # list of ship positions in (row, col) format
-        # self.positions = [pos for ship in grid.ships for pos in ship.positions()]
+        # list of ship positions in (row, col) format
+        self.positions = [pos for ship in grid.ships for pos in ship.positions()]
 
     def easy_shot(self) -> tuple[int, int]:  # returns a random coordinate of a valid shot
         return (0,0)    
