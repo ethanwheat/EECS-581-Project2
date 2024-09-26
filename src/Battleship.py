@@ -165,7 +165,7 @@ class Battleship:
                 elif (self.difficulty == "3"):
                     # Get coordinate from AI hard shot and shoot that shot
                     coordinate = self.AIOpponent.hard_shot()
-                    enemy_player.strike(strike_pos)
+                    enemy_player.strike(coordinate)
 
             # Check if the game should end (all ships sunk)
             if all(ship.sunk() for ship in enemy_player.ships):
