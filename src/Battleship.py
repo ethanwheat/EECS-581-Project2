@@ -33,7 +33,7 @@ class Battleship:
           cols (int, optional): The number of columns in this Battleship game. Defaults to `10`
         """
 
-        # Prompt setup game
+        # Prompt setup gam
         option, self.difficulty, numShips = self.setupGame()
         playingAI = option == "2"
 
