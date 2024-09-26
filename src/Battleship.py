@@ -33,6 +33,7 @@ class Battleship:
           cols (int, optional): The number of columns in this Battleship game. Defaults to `10`
         """
 
+        # Prompt game setup
         option, self.difficulty, numShips = self.gameSetup()
         playingAI = option == "2"
 
@@ -41,6 +42,7 @@ class Battleship:
         self.AIOpponent = None
         self.turn = 0  # start with p1 turn, 0 for p1 and 1 for p2)
 
+        # Create AI Opponent
         if (playingAI):
             self.AIOpponent = AIOpponent(self.player1)
 
@@ -51,7 +53,7 @@ class Battleship:
         numShips = 0
         state = 0
 
-        # Loop through setup prompts
+        # Loop through game setup prompts
         while (True):
             if (state == 0):
                 # Prompt for option
