@@ -51,6 +51,7 @@ class Battleship:
         numShips = 0
         state = 0
 
+        # Loop through setup prompts
         while (True):
             if (state == 0):
                 # Prompt for option
