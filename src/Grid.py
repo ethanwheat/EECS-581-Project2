@@ -137,9 +137,6 @@ class Grid:
             print(f"{'Player 2 ' if self.playingAI and not self.isAI else ''}Miss at {pos}.")
             self.shot_grid[row][col] = 1
 
-        if (self.isAI):
-            self.display_shots()
-
     def place_ship(self, ship: Ship) -> None | Ship:
         """Places a valid ship into the grid, if invalid it will instead return the ship"""
 
