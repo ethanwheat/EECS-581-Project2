@@ -41,14 +41,14 @@ class AIOpponent:
                             self.shot_grid[row][col] = 2  # mark the spot as hit
                             self.current_hits.append((row, col))  # update the current hits of a ship
                             self.targets = self.next_targets()  # populate adjacent targets
-                    else:
+                    else:  # if a shot would be a miss
                         self.shot_grid[row][col] = 1  # mark the spot as a miss
                     return (row,col)  # return the shot coordinates
 
         else:  # orthogonally fire
-            pos = random.choice(self.targets)
-            self.targets.remove(pos)
-            row, col = pos
+            pos = random.choice(self.targets)  # choose a random option from the targets
+            self.targets.remove(pos)  # remove that option
+            row, col = pos  # retrieve the row and col
             if pos in self.positions:  # if the shot would be a hit
                 if self.same_ship(self.current_hits[0], pos):  # if the shot will hit the same ship as the first
                     if self.would_sink(row, col):  # if the shot will sink the ship
@@ -56,12 +56,12 @@ class AIOpponent:
                             self.current_hits = []  # reset current_hits
                             self.targets = []  # reset targets
                         else:  # if there are hits in backlog
-                            self.current_hits = self.hit_backlog.pop()
-                            self.targets = self.next_targets()
+                            self.current_hits = self.hit_backlog.pop()  # reset current hits to previous ship
+                            self.targets = self.next_targets()  # update the targets for the previous ship
                     else:  # the shot hits the same ship but doesn't sink it 
                         self.shot_grid[row][col] = 2  # mark as hit
-                        self.current_hits.append((row,col))
-                        self.targets = self.next_targets()
+                        self.current_hits.append((row,col))  # add the hit to current_hits
+                        self.targets = self.next_targets()  # update the potential targets
                 else:  # if the shot will hit a ship but not the same one as the last shot 
                     if self.would_sink(row, col) == False:  # if the shot will hit a different ship but not sink it
                         self.shot_grid[row][col] = 2  # mark as hit 
@@ -121,11 +121,11 @@ class AIOpponent:
         return False  # return False if ship position not given
 
     def same_ship(self, prev_shot: tuple[int,int], cur_shot: tuple[int,int]) -> bool: # checks if shots hit same ship
-        for ship in self.opponent_grid.ships:
-            positions = ship.positions()
-            if prev_shot in positions and cur_shot in positions:
-                return True
-        return False
+        for ship in self.opponent_grid.ships:  # iterate through the ships in an opponents grid
+            positions = ship.positions()  # retrieve the positions of a ship
+            if prev_shot in positions and cur_shot in positions:  # if the current shot and previous shot are in positions
+                return True  # return True since same ship
+        return False  # return False since not same ship
 
     def hard_shot(self) -> tuple[int, int]:  # returns coordinate that is guaranteed to be a hit
         return (0,0)
