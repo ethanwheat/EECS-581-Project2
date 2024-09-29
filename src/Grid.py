@@ -4,15 +4,9 @@ Contains the Grid class
 - Manages state of each players grid
 - Keeps track of ships
 
-<<<<<<< Updated upstream
-Authors: Kyler Luong, Cody Duong, Harrison Wendt, Gavin Kirwan
-Date: 2024-09-12
-Edited: 2024-09-25
-=======
-Authors: Kyler Luong, Cody Duong, Harrison Wendt, Mario Sumanasekara
+Authors: Kyler Luong, Cody Duong, Harrison Wendt, Gavin Kirwan, Mario Sumanasekara
 Date: 2024-09-12
 Edited: 2024-09-28
->>>>>>> Stashed changes
 """
 
 import pygame
@@ -43,7 +37,6 @@ class Grid:
         self.isAI = isAI
         self.playingAI = playingAI
 
-<<<<<<< Updated upstream
         # Check if is AI
         if (not self.isAI):
             # If not AI then prompt user to place ships
@@ -51,7 +44,7 @@ class Grid:
         else:
             # If AI then generate ship placements
             self.aiPlaceShips()
-=======
+            
         """
         Initialize the pygame mixer module which is responsible for handling 
         sound effects and audio playback within the game as part of the custom addition
@@ -64,8 +57,7 @@ class Grid:
         self.miss_sound = pygame.mixer.Sound("src/sounds/miss.wav")
         self.sunk_sound = pygame.mixer.Sound("src/sounds/sunk.wav")
 
-        num_ships = Grid.__prompt_number_of_ships()
->>>>>>> Stashed changes
+        #num_ships = Grid.__prompt_number_of_ships()
 
     # Prompts user to place ships
     def userPlaceShips(self):
@@ -141,19 +133,14 @@ class Grid:
         for ship in self.ships:  # go through all ships
             if ship.strike(pos):  # if ship is hit
                 hit_any_ship = True  # set flag to true
-<<<<<<< Updated upstream
+
                 print(f"{'Player 2 ' if self.playingAI and not self.isAI else ''}Hit at {pos}!")
+                pygame.mixer.Sound.play(self.hit_sound)    #Plays 'hit' sound
 
                 if ship.sunk():
                     print(f"{'Player 2 ' if self.playingAI and not self.isAI else 'You '}sunk a {ship}!")
-=======
-                print(f"Hit at {pos}!")
-                pygame.mixer.Sound.play(self.hit_sound)     #Plays 'hit' sound
-
-                if ship.sunk():
-                    print(f"You sunk a {ship}!")
                     pygame.mixer.Sound.play(self.sunk_sound)    #Plays 'sunk' sound
->>>>>>> Stashed changes
+
                     # update grid with sunk ships
                     for ship_pos in ship.positions():
                         sr, sc = (
