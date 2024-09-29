@@ -8,7 +8,6 @@ Authors: Kyler Luong, Cody Duong, Harrison Wendt, Gavin Kirwan
 Date: 2024-09-12
 Edited: 2024-09-25
 """
-
 from typing import Literal
 from src.Grid import Grid
 from src.utils import *
