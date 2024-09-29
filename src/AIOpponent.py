@@ -4,7 +4,7 @@ Contains the AI Opponent class
 - Input an opponent's grid
 - Shot methods return coordinates 
 
-Authors: Ethan Wheat 
+Authors: Ethan Wheat, Edgar Mendez 
 Date: 2024-09-25
 """
 from src.Grid import Grid
@@ -27,8 +27,11 @@ class AIOpponent:
         self.hit_backlog = []  # if another boat struck orthogonally, add to backlog
 
     def easy_shot(self) -> tuple[int, int]:  # returns a random coordinate of a valid shot
-        return (0,0)    
-
+        row, col = random.randint(0,9), random.randint(0,9)
+        while self.valid_shot(row, col) != True:
+            row, col = random.randint(0,9), random.randint(0,9)
+        return (row, col)
+        
     def medium_shot(self) -> tuple[int, int]:  # returns a random coordinate of a valid shot until hit
                                                # then returns orthogonally adjacent coords until sunk
         if len(self.current_hits) == 0: # random fire
@@ -128,4 +131,4 @@ class AIOpponent:
         return False  # return False since not same ship
 
     def hard_shot(self) -> tuple[int, int]:  # returns coordinate that is guaranteed to be a hit
-        return (0,0)
+        return self.positions.pop()
