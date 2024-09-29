@@ -1,6 +1,5 @@
 """
 Contains the Battleship class
-
 - Handles player setup and controls
 - Ends game upon certain conditions
 
