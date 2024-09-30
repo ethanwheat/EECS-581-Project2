@@ -42,3 +42,12 @@ Ok, well git does that, here: [file history](https://github.com/Tyler51235/EECS-
 | Edgar    | 2.5   |
 | Gavin    | 2.25  |
 | Mario    | 2.0   |
+
+All:
+    Thursday 09/26 - 15 mins (GTA team meeting)
+    Thursday 09/26 - 10 mins (team meeting)
+
+Ethan:
+    Wednesday 09/25 - 30 mins (design AIOpponent class)
+    Thursday 09/26 - 1 hr (start medium_shot and helper methods)
+    Friday 09/27 - 1hr (finish medium_shot algorithm)
