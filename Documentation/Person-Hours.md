@@ -51,3 +51,7 @@ Ethan:
     Wednesday 09/25 - 30 mins (design AIOpponent class)
     Thursday 09/26 - 1 hr (start medium_shot and helper methods)
     Friday 09/27 - 1hr (finish medium_shot algorithm)
+
+Gavin:
+    Wednesday 09/25 - 2 hrs (update play function in Battleship.py and create aiPlaceShips function in Grid.py)
+    Thursday 09/26 - 15 min (Redo some code in play function and aiPlaceShips)
