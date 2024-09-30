@@ -23,6 +23,7 @@ prompt_orientation() & prompt_root() - Helper methods to prompt the user for shi
 Grid Class
 Manages the game board for a player, including the ships and the state of shots made on the board. It handles ship placement, shot tracking, and determining the result of strikes.
 
+Key Attributes:
 ships: list[Ship] - A list of all ships placed on the grid.
 shot_grid: list[list[Literal[0, 1, 2, 3]]] - A 2D grid that tracks the state of each position.
 0 = no shot made,
@@ -30,10 +31,19 @@ shot_grid: list[list[Literal[0, 1, 2, 3]]] - A 2D grid that tracks the state of 
 2 = shot made (hit),
 3 = sunk ship.
 rows: int & cols: int - The number of rows and columns in the grid.
-Key Methods:
-__init__(rows: int, cols: int) - Initializes the grid with a specific number of rows and columns. It prompts the player to place their ships.
+num_ships: int - The number of ships on the grid.
+isAI: bool - Indicates if this grid belongs to an AI player.
+playingAI: bool - Indicates if the game is being played against an AI.
+hit_sound, miss_sound, sunk_sound: pygame.mixer.Sound - Sound effects for different shot outcomes.
 
-strike(pos: tuple[int, int]) -> None - Handles a strike at the given position on the grid. It checks if any ship is hit, updates the grid state accordingly (hit, miss, or sunk), and prints messages.
+Key Methods:
+__init__(rows: int, cols: int, numShips: int, isAI: bool, playingAI: bool) - Initializes the grid with specified parameters.
+
+userPlaceShips() - Prompts the user to place their ships on the grid.
+
+aiPlaceShips() - Automatically places ships for an AI player.
+
+strike(pos: tuple[int, int]) -> None - Handles a strike at the given position on the grid. It checks if any ship is hit, updates the grid state accordingly (hit, miss, or sunk), and plays appropriate sound effects.
 
 place_ship(ship: Ship) -> None | Ship - Attempts to place a ship on the grid. If the placement is valid, the ship is added to the grid. Otherwise, the method returns the ship to indicate failure.
 
@@ -41,14 +51,49 @@ validate_ship(ship: Ship) -> bool - Validates the position and orientation of a 
 
 display_ships() & display_shots() - Methods to visually display the player's grid, showing either the ships' positions or the results of attempted shots.
 
-__prompt_number_of_ships() - Prompts the user for the number of ships they want to place (between 1 and 5).
-
-3. Battleship Class
+Battleship Class
 Manages the overall game flow, including player turns, board setup, and determining the winner. 
 
 Key Attributes:
 player1: Grid & player2: Grid - Boards for the two players.
 turn: Literal[0, 1] - Keeps track of which player's turn it is (0 for Player 1, 1 for Player 2).
+AIOpponent: bool - Indicates if the game is against an AI opponent.
+difficulty: int - The difficulty level of the AI opponent.
+
 Key Methods:
-__init__(rows: int = 10, cols: int = 10) - Initializes the game with two grids, one for each player. The default grid size is 10x10.
+__init__(rows: int = 10, cols: int = 10) - Initializes the game with two grids, one for each player. The default grid size is 10x10. It also sets up the game based on user preferences (player vs player or player vs AI).
+
+setupGame() - Prompts the user to choose game options, including playing against an AI and difficulty level.
+
+play() - Manages the main game loop, alternating between players (or AI) and handling turns until the game ends.
+
+AIOpponent Class
+Manages the AI opponent's behavior, including different difficulty levels of shot selection.
+
+Key Attributes:
+opponent_grid: Grid - The grid of the human player.
+rows: int & cols: int - The dimensions of the grid.
+shot_grid: list[list[int]] - Tracks the AI's shots.
+positions: list[tuple[int, int]] - List of all ship positions on the opponent's grid.
+current_hits: list[tuple[int, int]] - Tracks current successful hits on a ship.
+targets: list[tuple[int, int]] - Potential target positions for the next shot.
+hit_backlog: list[list[tuple[int, int]]] - Stores hits on other ships while focusing on one.
+
+Key Methods:
+__init__(grid: Grid) - Initializes the AI opponent with the human player's grid.
+
+easy_shot() -> tuple[int, int] - Returns a random valid shot coordinate.
+
+medium_shot() -> tuple[int, int] - Implements a smarter shooting strategy, targeting adjacent positions after a hit.
+
+hard_shot() -> tuple[int, int] - Returns a guaranteed hit by using knowledge of ship positions.
+
+next_targets() -> list[tuple[int, int]] - Determines the next potential target positions based on current hits.
+
+valid_shot(row: int, col: int) -> bool - Checks if a shot at the given position is valid.
+
+would_sink(row: int, col: int) -> bool - Determines if a shot at the given position would sink a ship.
+
+same_ship(prev_shot: tuple[int,int], cur_shot: tuple[int,int]) -> bool - Checks if two hit positions belong to the same ship.
+
 

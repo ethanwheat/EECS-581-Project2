@@ -4,11 +4,14 @@ Contains the Grid class
 - Manages state of each players grid
 - Keeps track of ships
 
-Authors: Kyler Luong, Cody Duong, Harrison Wendt
+Authors: Kyler Luong, Cody Duong, Harrison Wendt, Gavin Kirwan, Mario Sumanasekara
 Date: 2024-09-12
+Edited: 2024-09-28
 """
 
+import pygame
 import itertools
+import random
 from typing import Literal
 from src.Ship import Ship
 from src.utils import *
@@ -25,16 +28,41 @@ class Grid:
     rows: int
     cols: int
 
-    def __init__(self, rows: int, cols: int) -> None:
+    def __init__(self, rows: int, cols: int, numShips: int, isAI: bool, playingAI: bool) -> None:
         self.rows = rows
         self.cols = cols
+        self.ships = []
+        self.num_ships = numShips
         self.shot_grid = [[0 for _ in range(rows)] for _ in range(cols)]
+        self.isAI = isAI
+        self.playingAI = playingAI
 
-        num_ships = Grid.__prompt_number_of_ships()
+        # Check if is AI
+        if (not self.isAI):
+            # If not AI then prompt user to place ships
+            self.userPlaceShips()
+        else:
+            # If AI then generate ship placements
+            self.aiPlaceShips()
+            
+        """
+        Initialize the pygame mixer module which is responsible for handling 
+        sound effects and audio playback within the game as part of the custom addition
+        """
+        # Initialize pygame mixer
+        pygame.mixer.init()
 
+        # Load sound effects
+        self.hit_sound = pygame.mixer.Sound("src/sounds/hit.wav")
+        self.miss_sound = pygame.mixer.Sound("src/sounds/miss.wav")
+        self.sunk_sound = pygame.mixer.Sound("src/sounds/sunk.wav")
+
+        #num_ships = Grid.__prompt_number_of_ships()
+
+    # Prompts user to place ships
+    def userPlaceShips(self):
         # variant ship sizes
-        ships_to_place = [Ship(i) for i in range(1, num_ships + 1)]  # type: ignore
-        self.ships = []  # type: ignore
+        ships_to_place = [Ship(i) for i in range(1, self.num_ships + 1)]  # type: ignore
 
         # prompt ship placement
         while len(ships_to_place) > 0:
@@ -60,9 +88,36 @@ class Grid:
 
         print("\nYour ships!")
         self.display_ships()
-        input("Enter to continue to next player setup")
+
+        if (not self.playingAI):
+            input("Enter to continue to next player setup")
+        else:
+            input("Enter to continue")
 
         clear_screen()
+
+    def aiPlaceShips(self):
+        # variant ship sizes
+        ships_to_place = [Ship(i) for i in range(1, self.num_ships + 1)]  # type: ignore
+
+        for ship in ships_to_place:
+            # Find a valid coordinate and place ship
+            while (True):
+                # List of orientations
+                orientations = ["H", "V"]
+                
+                # Randomly choose a row, col, and orientation
+                row = random.randint(1, self.rows)
+                col = random.randint(1, self.cols)
+                orientation = random.choice(orientations)
+
+                # Set orientation and root
+                ship.orientation = orientation
+                ship.root = (row, col)
+
+                # Check if valid placement, if not retry
+                if (not self.place_ship(ship)):
+                    break
 
     def strike(self, pos: tuple[int, int]) -> None:
         #
@@ -78,10 +133,14 @@ class Grid:
         for ship in self.ships:  # go through all ships
             if ship.strike(pos):  # if ship is hit
                 hit_any_ship = True  # set flag to true
-                print(f"Hit at {pos}!")
+
+                print(f"{'Player 2 ' if self.playingAI and not self.isAI else ''}Hit at {pos}!")
+                pygame.mixer.Sound.play(self.hit_sound)    #Plays 'hit' sound
 
                 if ship.sunk():
-                    print(f"You sunk a {ship}!")
+                    print(f"{'Player 2 ' if self.playingAI and not self.isAI else 'You '}sunk a {ship}!")
+                    pygame.mixer.Sound.play(self.sunk_sound)    #Plays 'sunk' sound
+
                     # update grid with sunk ships
                     for ship_pos in ship.positions():
                         sr, sc = (
@@ -94,25 +153,9 @@ class Grid:
                     ] = 2  # if ship not sunk but hit update shot grid to 2
                 break
         if not hit_any_ship:
-            print(f"Miss at {pos}.")
+            print(f"{'Player 2 ' if self.playingAI and not self.isAI else ''}Miss at {pos}.")
             self.shot_grid[row][col] = 1
-
-        self.display_shots()
-
-    @staticmethod
-    def __prompt_number_of_ships() -> int:
-        """Prompts the user for a number of ships they want to place"""
-        while True:
-            try:
-                num_ships = int(input("How many ships? (1-5): "))  # ask users
-                if 1 <= num_ships <= 5:  # bounds it needs to fit from user
-                    return num_ships
-                else:
-                    print(
-                        "Invalid number of ships, expected between 1-5 ships"
-                    )  # doesnt fit in bounds
-            except ValueError:
-                print("Invalid value for ships")
+            pygame.mixer.Sound.play(self.miss_sound)  # Plays 'miss' sound
 
     def place_ship(self, ship: Ship) -> None | Ship:
         """Places a valid ship into the grid, if invalid it will instead return the ship"""
