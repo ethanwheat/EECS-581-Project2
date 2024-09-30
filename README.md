@@ -5,6 +5,7 @@ This is the repository for Project 1 for KU EECS-581 (Software Engineering II).
 ## Getting Started
 
 This project requires Python 3.12^
+Also must install pygame module
 
 ```
 python ./main.py
