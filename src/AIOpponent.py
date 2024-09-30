@@ -27,9 +27,10 @@ class AIOpponent:
         self.hit_backlog = []  # if another boat struck orthogonally, add to backlog
 
     def easy_shot(self) -> tuple[int, int]:  # returns a random coordinate of a valid shot
-        row, col = random.randint(0,9), random.randint(0,9)
+        row, col = random.randint(0, self.rows - 1), random.randint(0, self.rows - 1)
         while self.valid_shot(row, col) != True:
-            row, col = random.randint(0,9), random.randint(0,9)
+            row, col = random.randint(0, self.rows - 1), random.randint(0, self.rows - 1)
+        self.shot_grid[row][col] = 1  # mark the spot as a miss
         return (row, col)
         
     def medium_shot(self) -> tuple[int, int]:  # returns a random coordinate of a valid shot until hit
