@@ -39,7 +39,7 @@ Ok, well git does that, here: [file history](https://github.com/Tyler51235/EECS-
 ------ Team 4 ------
 | Ethan    | 2.5   |
 | Tanner   | 2.0   |
-| Edgar    | 2.5   |
+| Edgar    | 1.0   |
 | Gavin    | 2.25  |
 | Mario    | 2.0   |
 
@@ -55,3 +55,7 @@ Ethan:
 Gavin:
     Wednesday 09/25 - 2 hrs (update play function in Battleship.py and create aiPlaceShips function in Grid.py)
     Thursday 09/26 - 15 min (Redo some code in play function and aiPlaceShips)
+
+Edgar:
+    Thursday 09/26 - 30 min (start easy_shot and start and finish hard_shot)
+    Sunday 09/29 - 30 min (finish easy shot)
