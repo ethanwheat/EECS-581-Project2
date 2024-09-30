@@ -15,6 +15,10 @@ Estimate by task:
   - given that the board state should be stored in a format for easy manipulating (for playing), it is likely already stored in an easy state for easy display
 5. Game End (est. <1 hour)
   - given that most logic should be implemented this should be as simple as checking if all a players ships are destroyed
+-- Team 4 --
+6. AI Opponent (est. 6.5 hours)
+7. Custom Feature - Sound Effects (est. 2 hours)
+8. Extra Game Setup (est. ~ 2.5 hours)
 
 
 ## Actual
@@ -32,3 +36,9 @@ Ok, well git does that, here: [file history](https://github.com/Tyler51235/EECS-
 | Joon     | 2.0   |
 | Hayden   | 1.5   |
 | Harrison | 3.0   |
+------ Team 4 ------
+| Ethan    | 2.5   |
+| Tanner   | 2.0   |
+| Edgar    | 2.5   |
+| Gavin    | 2.25  |
+| Mario    | 2.0   |
